@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 7000;
 // Log the request
 app.use(morgan("tiny"));
 
+// Connect MongoDB
+const connectDB = require("./server/database/connection.js");
+connectDB();
+
 // Parse request body
 app.use(bodyparser.urlencoded({ extended: true }));
 
@@ -23,18 +27,10 @@ app.use("/css", express.static(path.resolve(__dirname, "assets/css")));
 app.use("/img", express.static(path.resolve(__dirname, "assets/img")));
 app.use("/js", express.static(path.resolve(__dirname, "assets/js")));
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
-app.get("/update-user", (req, res) => {
-  res.render("update_user");
-});
-
-app.get("/add-user", (req, res) => {
-  res.render("add_user");
-});
-
+// Port
 app.listen(PORT, () =>
   console.log(`Server is running on: http://localhost:${PORT})`)
 );
+
+// Use routing
+app.use("/", require("./server/routes/route.js"));
