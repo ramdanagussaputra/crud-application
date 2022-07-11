@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const bodyparser = require("body-parser");
+// const bodyparser = require("body-parser");
 const path = require("path");
 
 const app = express();
@@ -17,7 +17,9 @@ const connectDB = require("./server/database/connection.js");
 connectDB();
 
 // Parse request body
-app.use(bodyparser.urlencoded({ extended: true }));
+// app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Set view engine
 app.set("view engine", "ejs");
